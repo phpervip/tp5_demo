@@ -24,4 +24,6 @@ tp5.caidou.biz
 
 微信开发教程视频：http://edu.51cto.com/lesson/id-62066.html
 
+方倍工作室的微信开发教程：http://www.cnblogs.com/txw1958/p/wechat-tutorial.html
+
 
