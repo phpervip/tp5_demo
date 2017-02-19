@@ -9,13 +9,49 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
+use think\Route;
+
+Route::rule('hello/:name','index/hello');
+Route::rule('helloo/:name',function($name){
+    return 'Helloo,'.$name.'!';
+});
+
 return [
-    '__pattern__' => [
-        'name' => '\w+',
-    ],
     '[hello]'     => [
         ':id'   => ['index/hello', ['method' => 'get'], ['id' => '\d+']],
         ':name' => ['index/hello', ['method' => 'post']],
     ],
+    'helloo/[:name]$'=>'index/index/helloo',
+
+    // 定义闭包
+    'helloo/[:name]'=>function($name){
+        return 'Hello,'.$name.'!';
+    },
+
+    // 定义路由的请求类型和后缀
+    'hello/[:name]'=>['index/hello',['method'=>'get','ext'=>'html']],
+
+    'hello16/:name' =>['index/hello16',[],['name'=>'\w+']],
+
+/*    'blog/:year/:month'=>['blog/archive',['method'=>'get'],['year'=>'\d{4}','month'=>'\d{2}']],
+    'blog/:id'=>['blog/get',['method'=>'get'],['id'=>'\d+']],
+    'blog/:name'=>['blog/read',['method'=>'get'],['name'=>'\w+']],*/
+
+  /*  '[blog]'=>[
+        ':year/:month'=>['blog/archive',['method'=>'get'],['year'=>'\d{4}','month'=>'\d{2}']],
+        ':id'=>['blog/get',['method'=>'get'],['id'=>'\d+']],
+        ':name'=>['blog/read',['method'=>'get'],['name'=>'\w+']],
+    ],*/
+
+   '__pattern__' => [
+        'name' => '\w+',
+        'id'=>'\d+',
+        'year'=>'\d{4}',
+        'month'=>'\d{2}',
+
+    ],
+   'blog/:id'=>'blog/get',
+    'blog/:name'=>'blog/read',
+    'blog-<year>-<month>'=>'blog/archive',
 
 ];

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{$result.id}--{$result.data}
+<br/>
+{Url::build('blog/read','name=thinkphp')}
+<br/>
+{Url::build('blog/get',['id'=>5])}
+<br/>
+{Url}
+<br/>
+{url('blog/read','name=thinkphp')}
+<br/>
+
+</body>
+</html>
