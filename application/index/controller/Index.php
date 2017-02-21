@@ -21,12 +21,7 @@ class Index extends Controller
         return 'this is a test function';
     }
 
-    public function test1(){
-        // $result = Db::execute('insert into think_data(id,data) values(4,"yii")');
-        $result = Db::execute('insert into think_data(data) values("phalcon")');
-        return $result;
 
-    }
 
     public function hello($name='thinkphp'){
         $this->assign('name',$name);
@@ -244,6 +239,207 @@ class Index extends Controller
 
     public function guest20(){
         return 'Hello,Guest!';
+    }
+
+    // 数据库操作
+    public function db_test1(){
+        // $result = Db::execute('insert into think_data(id,name) values(4,"yii")');
+        // 创建
+        // $result = Db::execute('insert into think_data(name) values("phalcon")');
+        // 更新
+        // $result = Db::execute('update think_data set name="symfony" where id=5');
+        // 读取
+        // $result = Db::query('select * from think_data where id="5"');
+        // dump($result);
+        // 显示数据库列表
+        // $result = Db::query('show tables from tp5_demo');
+        // dump($result);
+        /* foreach($result as $k=>$v){
+             $dbs[]=$v['Tables_in_tp5_demo'];
+         }*/
+        // $dbs = array_column($result,'Tables_in_tp5_demo');
+        // var_dump($dbs);
+        // 清空数据表
+        // $result = Db::execute('TRUNCATE table test');
+        // 切换数据库
+        // $result = Db::connect('db1')->query('select * from think_data where id=1');
+        // $result = Db::connect('db2')->query('select * from think_data where id=1');
+
+        // 参数绑定 更安全
+//        Db::execute('insert into think_data(id,name,status) values(?,?,?)',[6,'thinkphp',1]);
+//        $result = Db::query('select * from think_data where id=?',[6]);
+//        dump($result);
+
+        // 命名占位符 更安全
+        // Db::execute('insert into think_data(id,name,status) values(:id,:name,:status)',['id'=>7,'name'=>'ci','status'=>1]);
+        // $result = Db::query('select * from think_data where id=:id',['id'=>7]);
+        // dump($result);
+        // return $result;
+
+        // 查询构造器 基于PDO实现
+        // 插入记录
+        // Db::table('think_data')->insert(['id'=>8,'name'=>'laravel','status'=>1]);
+        // 更新记录
+        // Db::table('think_data')->where('id',6)->update(['name'=>'Kohana']);
+        // 查询数据
+        // $list = Db::table('think_data')->where('id',7)->select();
+        // 删除数据
+        // Db::table('think_data')->where('id',6)->delete();
+
+        // 使用助手函数
+//        $db = db('data');
+//        $db->insert(['id'=>9,'name'=>'shopnc']);
+//        $db->where('id',2)->update(['name'=>'tpshop']);
+//        $list = $db->where('id',9)->select();
+//        dump($list);
+//        $db->where('id',2)->delete();
+
+        // 链式操作 不分先后
+//        $list = Db::name('data')
+//            ->where('status',1)
+//            ->field('id,name')
+//            ->order('id','desc')
+//            ->limit(10)
+//            ->select();
+//        dump($list);
+
+        // 事务操作
+//        Db::transaction(function(){
+//            Db::table('think_user')
+//                ->delete(1);
+//            Db::table('think_data')
+//                ->insert(['id'=>10,'name'=>'tpshop','status'=>1]);
+//        });
+
+        // 手动控制事务提交
+        Db::startTrans();
+        try{
+            Db::table('think_user')
+                ->delete(2);
+            Db::table('think_data')
+                ->insert(['id'=>11,'name'=>'thinkphp','status'=>1]);
+
+            // 提交事务
+            Db::commit();
+
+        }catch(\Exception $e){
+
+            // 回滚事务
+            Db::rollback();
+
+        }
+
+
+    }
+
+    // 查询语言
+    public function db_test2(){
+
+//        $result = Db::name('data')
+//            ->where([
+//                'id'   => [['in', [1, 2, 3]], ['between', '5,8'], 'or'],
+//                'name' => ['like', '%think%'],
+//            ])->limit(10)->select();
+//        dump($result);
+//
+//        $result = Db::name('data')
+//            ->where('id&status', '>', 0)
+//            ->limit(10)
+//            ->select();
+//        dump($result);
+
+
+        // tp3.2有，tp5没有？
+//        $condition['name'] = 'thinkphp';
+//        $condition['id'] = '1';
+//        $condition['_logic'] = 'OR';
+
+//        $result = Db::view('user','id,name,status')
+//            ->view('profile',['name'=>'truename','phone','email'],'profile.user_id=user.id')
+//            ->where('status',1)
+//            ->order('id desc')
+//            ->select();
+//        dump($result);
+
+        // find select方法可用于闭包查询
+//        $result = Db::name('data')->select(function ($query) {
+//            $query->where('name', 'like', '%think%')
+//                ->where('id', 'in', '1,2,3')
+//                ->limit(10);
+//        });
+//        dump($result);
+
+        // 事先封装query方法
+//        $query = new \think\db\Query;
+//        $query->name('city')->where('name', 'like', '%think%')
+//            ->where('id', 'in', '1,2,3')
+//            ->limit(10);
+//        $result = Db::select($query);
+//        dump($result);
+
+        // 获取某行表，某字段值
+        // 获取id为8的data数据的name字段值
+//        $name = Db::name('data')
+//        ->where('id', 8)
+//        ->value('name');
+//        dump($name);
+
+        // 获取data表的name列
+//        $list = Db::name('data')
+//        ->where('status', 1)
+//        ->column('name');
+//        dump($list);
+
+        // 如果希望返回以id为索引的name列数据，可以改成：
+
+        // 获取data表的name列 并且以id为索引
+//        $list = Db::name('data')
+//        ->where('status', 1)
+//        ->column('name', 'id');
+//        dump($list);
+
+        // 聚合查询
+        // 统计user表的最高分
+//        $max = Db::name('score')
+//        ->where('status', 1)
+//        ->max('score');
+//        dump($max);
+
+        // 字符串查询 配合参数绑定 避免注入
+//        $result = Db::name('data')
+//            ->where('id > :id AND name IS NOT NULL', ['id' => 10])
+//            ->select();
+//        dump($result);
+
+        // 日期查询
+        // 日期查询对create_time字段类型没有要求，
+        // 可以是int/string/timestamp/datetime/date中的任何一种，
+        // 系统会自动识别进行处理。
+//        $result = Db::name('user')
+//            ->whereTime('create_time','between',['2017-2-8','2017-2-10'])
+//            ->select();
+//        dump($result);
+
+        // 人性化日期查询 today,yesterday,week,last week
+        // 获取上周的数据
+//        $result = Db::name('user')
+//        ->whereTime('create_time', 'last week')
+//        ->select();
+//        dump($result);
+
+        // 分块查询
+        // 没有主键情况下，指出查询的排序字段
+        Db::name('user')
+            ->where('status','>',0)
+            ->chunk(3,function($list){
+                // 处理3条记录
+                foreach($list as $data){
+                    // 返回false 则中断后续查询
+                    return false;
+                }
+            },'id');
+
+
     }
 
 

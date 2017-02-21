@@ -89,6 +89,9 @@ class wechatCallbackapiTest
                 $content = "欢迎使用方倍工作室微信开发入门教程Demo\n请回复以下关键字：文本 表情 单图文 多图文 音乐\n请按住说话 或 点击 + 再分别发送以下内容：语音 图片 小视频 我的收藏 位置";
                 $content .= (!empty($object->EventKey))?("\n来自二维码场景 ".str_replace("qrscene_","",$object->EventKey)):"";
                 $content .= "\n\n".'<a href="http://m.cnblogs.com/?u=txw1958">技术支持 方倍工作室</a>';
+
+                
+
                 break;
             case "unsubscribe":
                 $content = "取消关注";
