@@ -50,8 +50,16 @@ return [
         'month'=>'\d{2}',
 
     ],
-   'blog/:id'=>'blog/get',
+    'blog/:id'=>'blog/get',
     'blog/:name'=>'blog/read',
     'blog-<year>-<month>'=>'blog/archive',
+
+    'user/index'      => 'index/user/index',
+    'user/create'     => 'index/user/create',
+    'user/add'        => 'index/user/add',
+    'user/add_list'   => 'index/user/addList',
+    'user/update/:id' => 'index/user/update',
+    'user/delete/:id' => 'index/user/delete',
+    'user/:id'        => 'index/user/read',
 
 ];
