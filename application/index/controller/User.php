@@ -13,21 +13,38 @@ use think\Controller;
 class User extends Controller
 {
     public function index(){
-      /*  $list = UserModel::all();
+       // $list = UserModel::all();
+        /*      $list = UserModel::scope('email,status')->all();
+
+            foreach ($list as $user) {
+                 echo $user->nickname . '<br/>';
+                 echo $user->email . '<br/>';
+                 //echo date('Y/m/d', $user->birthday) . '<br/>';
+                 echo $user->birthday . '<br/>';
+                 echo '----------------------------------<br/>';
+             }
+             echo 'index';*/
+
+       /* $list = UserModel::where('id','<',3)->select();
         foreach ($list as $user) {
             echo $user->nickname . '<br/>';
             echo $user->email . '<br/>';
             echo date('Y/m/d', $user->birthday) . '<br/>';
             echo '----------------------------------<br/>';
         }*/
-        echo 'index';
 
-        $list = UserModel::where('id','<',3)->select();
+        $list = UserModel::scope('email')
+        ->scope('status')
+            ->scope(function ($query) {
+                $query->order('id', 'desc');
+            })
+            ->all();
         foreach ($list as $user) {
             echo $user->nickname . '<br/>';
             echo $user->email . '<br/>';
-            echo date('Y/m/d', $user->birthday) . '<br/>';
-            echo '----------------------------------<br/>';
+            echo $user->birthday . '<br/>';
+            echo $user->status . '<br/>';
+            echo '-------------------------------------<br/>';
         }
 
     }
@@ -38,7 +55,7 @@ class User extends Controller
 
     public function add(){
         $user = new UserModel;
-       /* $user->nickname = '流年';
+        $user->nickname = '流年';
         $user->email = 'thinkphp@qq.com';
         $user->birthday = strtotime('1977-03-05');
         // var_dump($user);
@@ -47,7 +64,7 @@ class User extends Controller
             return '用户［'.$user->nickname.'］：'.$user->id.'新增成功';
         }else{
             return $user->getError();
-        }*/
+        }
 
 
         // 默认情况下，实例化模型类后执行save操作都是执行的数据库insert操作，
@@ -55,17 +72,15 @@ class User extends Controller
 
         // $user->isUpdate()->save();
 
+/*
         $user['nickname'] = '看云';
         $user['email']    = 'kancloud@qq.com';
         $user['birthday'] = strtotime('2015-04-02');
-
-       if ($result = UserModel::create($user)) {
-
-            return '用户[ ' . $user->nickname . ':' . $result . ' ]新增成功';
-
+        if ($result = UserModel::create($user)) {
+            return '用户[ ' . $result->nickname . ':' . $result->id . ' ]新增成功';
         } else {
             return '新增出错';
-        }
+        }*/
 
 
 
@@ -78,10 +93,10 @@ class User extends Controller
             ['nickname' => '李四', 'email' => 'lisi@qq.com', 'birthday' => strtotime('1990-09-19')],
         ];
 
-        dump($list);
+        //dump($list);
 
         if ($user->saveAll($list)) {
-            var_dump($user->getLastSql());exit;
+            // var_dump($user->getLastSql());exit;
             return '用户批量新增成功';
         } else {
             return $user->getError();
@@ -131,6 +146,7 @@ class User extends Controller
 
         // echo date('Y/m/d', $user->birthday) . '<br/>';
         echo $user->birthday. '<br/>';
+        echo $user->user_birthday. '<br/>';
 
     }
 
