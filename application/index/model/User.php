@@ -85,11 +85,24 @@ class user extends Model
     return $status[$value];
     }
 
-    protected function scopeEmail($query){
+/*    protected function scopeEmail($query){
         $query->where('email','thinkphp@qq.com');
-    }
+    }*/
 
     protected function scopeStatus($query){
+        $query->where('status',1);
+    }
+
+    protected function scopeEmail($query,$email){
+        $query->where('email',$email);
+    }
+
+    // 全局查询范围
+    //可以给模型定义全局的查询范围，在模型类添加一个静态的base方法即可，
+    //例如我们给模型类增加一个全局查询范围，用于查询状态为1的数据：
+
+    protected static function base($query){
+        // 查询状态为1的数据
         $query->where('status',1);
     }
 
