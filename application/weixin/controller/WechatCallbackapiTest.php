@@ -441,5 +441,37 @@ $item_str    </Articles>
             file_put_contents($log_filename, date('Y-m-d H:i:s')." ".$log_content."\r\n", FILE_APPEND);
         }
     }
+	
+    //发送get或post请求
+	private function http_curl($method = 'get', $url, $data = array())
+	{
+		$ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		if($method == 'get'){
+            curl_setopt($ch, CURLOPT_HEADER, 0);            	
+		}else{
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        }
+        $res = curl_exec($ch);
+        if (curl_errno($ch)) {
+            return false;
+        }
+        return json_decode($res, true);
+	}
+
+    //获取access_token
+    private function getWxAccessToken(){
+
+    }
+
+    //创建自定义菜单
+    private function createMenu(){
+        
+    }
+
+
+
 }
 ?>
