@@ -1,0 +1,8 @@
+.idea
+composer.lock
+*.log
+thinkphp
+tp5.zip
+application/database.php
+application/database_0.php
+
