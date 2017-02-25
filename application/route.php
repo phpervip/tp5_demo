@@ -61,5 +61,6 @@ return [
     'user/update/:id' => 'index/user/update',
     'user/delete/:id' => 'index/user/delete',
     'user/:id'        => 'index/user/read',
+    'userA/:id'       => 'index/userA/read',
 
 ];
