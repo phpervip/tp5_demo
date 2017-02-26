@@ -516,9 +516,7 @@ $item_str    </Articles>
                     )
                 )
             ),   //第一个一级菜单
-            array(
-
-            ),    //第二个一级菜单
+            array(),    //第二个一级菜单
             array()     //第三个一级菜单
         );
         $postJson = urldecode(json_encode($postArr));
