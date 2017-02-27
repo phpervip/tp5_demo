@@ -453,13 +453,13 @@ $item_str    </Articles>
             curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         }
         $returnData = curl_exec($ch);
+        curl_close($ch);
         if($type == 'json'){
             if (curl_errno($ch)){
                 return curl_error($ch);
             }else{
                 return json_decode($returnData, true);
             }
-            curl_close($ch);
         }
     }
 
