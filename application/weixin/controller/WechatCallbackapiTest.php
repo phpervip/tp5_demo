@@ -13,7 +13,7 @@ if (!isset($_GET['echostr'])) {
     $wechatObj->valid();
 }
 
-class wechatCallbackapiTest extends Controller
+class WechatCallbackapiTest extends Controller
 {
     //验证签名
     public function valid()
