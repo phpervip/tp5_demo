@@ -33,51 +33,51 @@ class wechatCallbackapiTest
         }
     }
 
-    //响应消息
-    // public function responseMsg()
-    // {
-    //     $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
-    //     if (!empty($postStr)){
-    //         $this->logger("R \r\n".$postStr);
-    //         $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
-    //         $RX_TYPE = trim($postObj->MsgType);
+    响应消息
+    public function responseMsg()
+    {
+        $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
+        if (!empty($postStr)){
+            $this->logger("R \r\n".$postStr);
+            $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
+            $RX_TYPE = trim($postObj->MsgType);
 
-    //         //消息类型分离
-    //         switch ($RX_TYPE)
-    //         {
-    //             case "event":
-    //                 $result = $this->receiveEvent($postObj);
-    //                 break;
-    //             case "text":
-    //                 $result = $this->receiveText($postObj);
-    //                 break;
-    //             case "image":
-    //                 $result = $this->receiveImage($postObj);
-    //                 break;
-    //             case "location":
-    //                 $result = $this->receiveLocation($postObj);
-    //                 break;
-    //             case "voice":
-    //                 $result = $this->receiveVoice($postObj);
-    //                 break;
-    //             case "video":
-    //             case "shortvideo":
-    //                 $result = $this->receiveVideo($postObj);
-    //                 break;
-    //             case "link":
-    //                 $result = $this->receiveLink($postObj);
-    //                 break;
-    //             default:
-    //                 $result = "unknown msg type: ".$RX_TYPE;
-    //                 break;
-    //         }
-    //         $this->logger("T \r\n".$result);
-    //         echo $result;
-    //     }else {
-    //         echo "";
-    //         exit;
-    //     }
-    // }
+            //消息类型分离
+            switch ($RX_TYPE)
+            {
+                case "event":
+                    $result = $this->receiveEvent($postObj);
+                    break;
+                case "text":
+                    $result = $this->receiveText($postObj);
+                    break;
+                case "image":
+                    $result = $this->receiveImage($postObj);
+                    break;
+                case "location":
+                    $result = $this->receiveLocation($postObj);
+                    break;
+                case "voice":
+                    $result = $this->receiveVoice($postObj);
+                    break;
+                case "video":
+                case "shortvideo":
+                    $result = $this->receiveVideo($postObj);
+                    break;
+                case "link":
+                    $result = $this->receiveLink($postObj);
+                    break;
+                default:
+                    $result = "unknown msg type: ".$RX_TYPE;
+                    break;
+            }
+            $this->logger("T \r\n".$result);
+            echo $result;
+        }else {
+            echo "";
+            exit;
+        }
+    }
 
     //接收事件消息
     private function receiveEvent($object)
