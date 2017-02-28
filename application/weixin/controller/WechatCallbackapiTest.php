@@ -473,8 +473,8 @@ $item_str    </Articles>
             return $_SESSION['access_token'];
         }else{
             //如果access_token不存在或者已经过期，重新获取access_token
-            $appid = 'wx0fa745fd2d4cb62c';
-            $appsecret = 'b055d3d2391794e1e7837520ef56c516';
+            $appid = 'wx9c45ac1710eb8a3a';
+            $appsecret = '64c8fdf0bdeaec473f9e4d971a63176a';
             $url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=' .$appid.'&secret='.$appsecret;
             $res = $this->http_curl($url, 'get', 'json');
             $access_token = $res['access_token'];
