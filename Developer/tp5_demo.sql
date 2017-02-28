@@ -63,6 +63,58 @@ LOCK TABLES `test` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `think_access`
+--
+
+DROP TABLE IF EXISTS `think_access`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `think_access` (
+  `user_id` int(6) unsigned NOT NULL,
+  `role_id` int(5) unsigned NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `think_access`
+--
+
+LOCK TABLES `think_access` WRITE;
+/*!40000 ALTER TABLE `think_access` DISABLE KEYS */;
+INSERT INTO `think_access` VALUES (1,1),(1,2),(1,3),(2,1);
+/*!40000 ALTER TABLE `think_access` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `think_book`
+--
+
+DROP TABLE IF EXISTS `think_book`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `think_book` (
+  `id` int(8) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `publish_time` int(11) unsigned DEFAULT NULL,
+  `create_time` int(11) unsigned NOT NULL,
+  `update_time` int(11) unsigned NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `user_id` int(6) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `think_book`
+--
+
+LOCK TABLES `think_book` WRITE;
+/*!40000 ALTER TABLE `think_book` DISABLE KEYS */;
+INSERT INTO `think_book` VALUES (1,'ThinkPHP5开发手册',2016,1487998055,1487998055,1,1),(2,'ThinkPHP5开发手册',2016,1487998201,1487998201,1,1),(3,'ThinkPHP5快速入门',2016,1487998201,1488004587,1,2),(4,'ThinkPHP5开发手册',1462464000,1487998267,1487998267,1,2);
+/*!40000 ALTER TABLE `think_book` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `think_data`
 --
 
@@ -115,6 +167,59 @@ INSERT INTO `think_profile` VALUES (1,3,'吉米','18277700000','1234@qq.com'),(2
 UNLOCK TABLES;
 
 --
+-- Table structure for table `think_profile_a`
+--
+
+DROP TABLE IF EXISTS `think_profile_a`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `think_profile_a` (
+  `id` int(6) unsigned NOT NULL AUTO_INCREMENT,
+  `truename` varchar(25) NOT NULL,
+  `birthday` int(11) NOT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `user_id` int(6) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `think_profile_a`
+--
+
+LOCK TABLES `think_profile_a` WRITE;
+/*!40000 ALTER TABLE `think_profile_a` DISABLE KEYS */;
+INSERT INTO `think_profile_a` VALUES (1,'刘晨',226339200,'中国上海','liu21st@gmail.com',1),(2,'刘晨',226339200,'中国上海','thinkphp@qq.com',2),(4,'',0,NULL,'liu21st@gmail.com',1);
+/*!40000 ALTER TABLE `think_profile_a` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `think_role`
+--
+
+DROP TABLE IF EXISTS `think_role`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `think_role` (
+  `id` int(5) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(25) NOT NULL,
+  `title` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `think_role`
+--
+
+LOCK TABLES `think_role` WRITE;
+/*!40000 ALTER TABLE `think_role` DISABLE KEYS */;
+INSERT INTO `think_role` VALUES (1,'editor','编辑'),(2,'leader','领导'),(3,'admin','管理员');
+/*!40000 ALTER TABLE `think_role` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `think_score`
 --
 
@@ -152,10 +257,10 @@ CREATE TABLE `think_user` (
   `email` varchar(255) DEFAULT NULL COMMENT '邮箱',
   `birthday` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '生日',
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
-  `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '注册时间',
-  `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+  `create_time` int(11) NOT NULL COMMENT '注册时间',
+  `update_time` int(11) NOT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -164,7 +269,7 @@ CREATE TABLE `think_user` (
 
 LOCK TABLES `think_user` WRITE;
 /*!40000 ALTER TABLE `think_user` DISABLE KEYS */;
-INSERT INTO `think_user` VALUES (1,'刘晨','liu21st@gmail.com',0,0,0,0),(2,'张三','zhanghsan@qq.com',0,0,0,0),(3,'李四','lisi@qq.com',0,0,0,0),(4,'张三','zhanghsan@qq.com',0,0,0,0),(5,'李四','lisi@qq.com',0,0,0,0),(6,'张三','zhanghsan@qq.com',0,0,0,0),(7,'李四','lisi@qq.com',0,0,0,0),(8,'张三','zhanghsan@qq.com',0,0,0,0),(9,'李四','lisi@qq.com',0,0,0,0),(10,'张三','zhanghsan@qq.com',0,0,0,0),(11,'李四','lisi@qq.com',0,0,0,0),(12,'张三','zhanghsan@qq.com',0,0,0,0),(13,'李四','lisi@qq.com',0,0,0,0),(14,'张三','zhanghsan@qq.com',0,0,0,0),(15,'李四','lisi@qq.com',0,0,0,0),(16,'流年','thinkphp@qq.com',0,0,0,0);
+INSERT INTO `think_user` VALUES (1,'刘晨','liu21st@gmail.com',569174400,1,0,0),(2,'张三','thinkphp@qq.com',653673600,1,0,0),(3,'李四','lisi@qq.com',653673600,0,0,0),(4,'张三','zhanghsan@qq.com',0,0,0,0),(5,'李四','lisi@qq.com',0,0,0,0),(6,'张三','zhanghsan@qq.com',0,0,0,0),(7,'李四','lisi@qq.com',0,0,0,0),(8,'张三','zhanghsan@qq.com',0,0,0,0),(9,'李四','lisi@qq.com',0,0,0,0),(10,'张三','zhanghsan@qq.com',0,0,0,0),(11,'李四','lisi@qq.com',0,0,0,0),(12,'张三','zhanghsan@qq.com',0,0,0,0),(13,'李四','lisi@qq.com',0,0,0,0),(14,'张三','zhanghsan@qq.com',0,0,0,0),(15,'李四','lisi@qq.com',0,0,0,0),(16,'流年','thinkphp@qq.com',0,0,0,0),(17,'张三','zhanghsan@qq.com',0,0,0,0),(18,'李四','lisi@qq.com',0,0,0,0),(19,'张三','zhanghsan@qq.com',0,0,0,0),(20,'李四','lisi@qq.com',0,0,0,0),(21,'张三','zhanghsan@qq.com',0,0,0,0),(22,'李四','lisi@qq.com',0,0,0,0),(23,'流年','thinkphp@qq.com',0,0,0,0),(24,'张三','zhanghsan@qq.com',0,0,0,0),(25,'李四','lisi@qq.com',0,0,0,0),(26,'张三','zhanghsan@qq.com',0,0,2017,2017),(27,'李四','lisi@qq.com',0,0,2017,2017),(28,'张三','zhanghsan@qq.com',0,1,1487777739,1487777739),(29,'李四','lisi@qq.com',0,1,1487777739,1487777739),(30,'流年','thinkphp@qq.com',0,1,1487856708,1487856708),(31,'流年','thinkphp@qq.com',0,1,1487856726,1487856726),(32,'依依','thinkphp@qq.com',315590400,2,1487856926,1487856926);
 /*!40000 ALTER TABLE `think_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -198,6 +303,35 @@ INSERT INTO `think_user0` VALUES (3,'jim',21,'female','2017-02-07 14:41:16',NULL
 UNLOCK TABLES;
 
 --
+-- Table structure for table `think_user_a`
+--
+
+DROP TABLE IF EXISTS `think_user_a`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `think_user_a` (
+  `id` int(6) unsigned NOT NULL AUTO_INCREMENT,
+  `nickname` varchar(25) NOT NULL,
+  `name` varchar(25) NOT NULL,
+  `password` varchar(50) NOT NULL,
+  `create_time` int(11) unsigned NOT NULL,
+  `update_time` int(11) unsigned NOT NULL,
+  `status` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `think_user_a`
+--
+
+LOCK TABLES `think_user_a` WRITE;
+/*!40000 ALTER TABLE `think_user_a` DISABLE KEYS */;
+INSERT INTO `think_user_a` VALUES (1,'张三','framework','123456',1487990821,1487993410,1),(2,'流年','thinkphp','123456',1487990986,1487990986,1);
+/*!40000 ALTER TABLE `think_user_a` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Dumping routines for database 'tp5_demo'
 --
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -210,4 +344,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-02-22 22:55:56
+-- Dump completed on 2017-02-25 15:36:59

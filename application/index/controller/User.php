@@ -9,6 +9,7 @@
 namespace app\index\controller;
 use app\index\model\User as UserModel;
 use think\Controller;
+use think\Validate;
 
 class User extends Controller
 {
@@ -33,12 +34,16 @@ class User extends Controller
             echo '----------------------------------<br/>';
         }*/
 
-        $list = UserModel::scope('email')
-        ->scope('status')
-            ->scope(function ($query) {
-                $query->order('id', 'desc');
-            })
-            ->all();
+   /*     $list = UserModel::scope('email')
+                    ->scope('status')
+                    ->scope(function ($query) {
+                    $query->order('id', 'desc');
+                        })
+                    ->all();*/
+
+        $list = UserModel::scope('email','thinkphp@qq.com')->all();
+
+
         foreach ($list as $user) {
             echo $user->nickname . '<br/>';
             echo $user->email . '<br/>';
@@ -50,12 +55,14 @@ class User extends Controller
     }
 
     public function create(){
+        return view('user/create');
         echo 'create';
     }
 
     public function add(){
         $user = new UserModel;
-        $user->nickname = '流年';
+
+       /* $user->nickname = '流年';
         $user->email = 'thinkphp@qq.com';
         $user->birthday = strtotime('1977-03-05');
         // var_dump($user);
@@ -64,7 +71,7 @@ class User extends Controller
             return '用户［'.$user->nickname.'］：'.$user->id.'新增成功';
         }else{
             return $user->getError();
-        }
+        }*/
 
 
         // 默认情况下，实例化模型类后执行save操作都是执行的数据库insert操作，
@@ -81,6 +88,37 @@ class User extends Controller
         } else {
             return '新增出错';
         }*/
+
+/*        if($user->allowField(true)->validate(true)->save(input('post.'))){
+            return '用户[ ' . $user->nickname . ':' . $user->id . ' ]新增成功';
+        }else{
+            return $user->getError();
+        }*/
+
+    /*    $data = input('post.');
+        // 数据验证
+        $result = $this->validate($data,'User');
+        if(true !== $result){
+            return $result;
+        }
+        $user = new UserModel;
+        // 数据保存
+        $user->allowField(true)->save($data);
+        return '用户[ ' . $user->nickname . ':' . $user->id . ' ]新增成功';
+        */
+
+    $data = input('post.');
+    // 验证birthday是否有效的日期
+
+        $check = Validate::is($data['birthday'],'date');
+        if(false === $check){
+            return 'birthday日期格式非法';
+        }
+
+        $user = new UserModel;
+        // 数据保存
+        $user->save($data);
+        return '用户[ ' . $user->nickname . ':' . $user->id . ' ]新增成功';
 
 
 

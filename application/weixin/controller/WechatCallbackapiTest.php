@@ -442,36 +442,88 @@ $item_str    </Articles>
         }
     }
 	
+
+
     //发送get或post请求
-	private function http_curl($method = 'get', $url, $data = array())
-	{
-		$ch = curl_init();
+    private function http_curl($url, $method = 'get', $type = 'json', $data = array())
+    {
+        $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		if($method == 'get'){
-            curl_setopt($ch, CURLOPT_HEADER, 0);            	
-		}else{
+        if ($method == 'post'){
             curl_setopt($ch, CURLOPT_POST, 1);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         }
-        $res = curl_exec($ch);
-        if (curl_errno($ch)) {
-            return false;
+        $returnData = curl_exec($ch);
+        curl_close($ch);
+        if($type == 'json'){
+            if (curl_errno($ch)){
+                return curl_error($ch);
+            }else{
+                return json_decode($returnData, true);
+            }
         }
-        return json_decode($res, true);
-	}
+    }
 
     //获取access_token
     private function getWxAccessToken(){
-
+        //将access_token存在session中
+        if ($_SESSION['access_token'] && $_SESSION['expire_time'] > time()){
+            //如access_token存在 且没有过期
+            return $_SESSION['access_token'];
+        }else{
+            //如果access_token不存在或者已经过期，重新获取access_token
+            $appid = 'wx0fa745fd2d4cb62c';
+            $appsecret = 'b055d3d2391794e1e7837520ef56c516';
+            $url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=' .$appid.'&secret='.$appsecret;
+            $res = $this->http_curl($url, 'get', 'json');
+            $access_token = $res['access_token'];
+            $_SESSION['access_token'] = $access_token;
+            $_SESSION['expire_time'] = time() + 7200;
+            return $access_token;
+        }
     }
 
     //创建自定义菜单
     private function createMenu(){
-        
+        header('Content-Type:text/html;charset=utf-8');
+        $access_token = $this->getWxAccessToken();
+        $url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token={$access_token}";
+        $postArr = array(
+            'button' => array(
+                array(
+                    'name' => urlencode('菜单一'),
+                    'type' => 'click',
+                    'key' => 'item1',
+                ),
+                array(
+                    'name' => urlencode('菜单二'),
+                    'sub_button' => array(
+                        array(
+                            'name' => urlencode('歌曲'),
+                            'type' => 'click',
+                            'key' => 'songs',
+                        ),  //第一个二级菜单
+                        array(
+                            'name' => urlencode('电影'),
+                            'type' => 'view',
+                            'url' => 'http://www.baidu.com'
+
+                        ),    //第二个二级菜单
+                        array(
+                            'name' => urlencode('菜单三'),
+                            'type' => 'view',
+                            'url'  => 'http://www.qq.com';
+                        )
+                    )
+                )
+            ),   //第一个一级菜单
+            array(),    //第二个一级菜单
+            array()     //第三个一级菜单
+        );
+        $postJson = urldecode(json_encode($postArr));
+        $res = $this->http_curl($url, 'post', 'json', $postJson);
+        var_dump($res);
     }
-
-
-
 }
 ?>
