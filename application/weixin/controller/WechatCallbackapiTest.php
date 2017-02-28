@@ -8,8 +8,7 @@ header('Content-type:text');
 define("TOKEN", "weixin");
 $wechatObj = new wechatCallbackapiTest();
 if (!isset($_GET['echostr'])) {
-    $wechatObj->createMenu();
-    // $wechatObj->responseMsg();
+    $wechatObj->responseMsg();
 }else{
     $wechatObj->valid();
 }
