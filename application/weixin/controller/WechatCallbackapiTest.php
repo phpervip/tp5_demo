@@ -7,6 +7,7 @@ header('Content-type:text');
 
 define("TOKEN", "weixin");
 $wechatObj = new wechatCallbackapiTest();
+
 if (!isset($_GET['echostr'])) {
     $wechatObj->responseMsg();
 }else{
@@ -33,7 +34,7 @@ class wechatCallbackapiTest
         }
     }
 
-    响应消息
+    // 响应消息
     public function responseMsg()
     {
         // $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
@@ -90,8 +91,6 @@ class wechatCallbackapiTest
                 $content = "欢迎使用方倍工作室微信开发入门教程Demo\n请回复以下关键字：文本 表情 单图文 多图文 音乐\n请按住说话 或 点击 + 再分别发送以下内容：语音 图片 小视频 我的收藏 位置";
                 $content .= (!empty($object->EventKey))?("\n来自二维码场景 ".str_replace("qrscene_","",$object->EventKey)):"";
                 $content .= "\n\n".'<a href="http://m.cnblogs.com/?u=txw1958">技术支持 方倍工作室</a>';
-
-                
 
                 break;
             case "unsubscribe":
@@ -183,6 +182,15 @@ class wechatCallbackapiTest
         }else if (strstr($keyword, "音乐")){
             $content = array();
             $content = array("Title"=>"最炫民族风", "Description"=>"歌手：凤凰传奇", "MusicUrl"=>"http://mascot-music.stor.sinaapp.com/zxmzf.mp3", "HQMusicUrl"=>"http://mascot-music.stor.sinaapp.com/zxmzf.mp3");
+        }else if(strstr($keyword, "菜单")){
+            $result = $this->createMenu();
+            $content = "微笑：/::) ,返回 result = ".$result;
+        }else if(strstr($keyword, "栏目")){
+            $result = $this->createMenu1();
+            $content = "微笑：/::) ,返回 result = ".$result;
+        }else if(strstr($keyword, "at")){
+            $result = $this->getWxAccessToken1();
+            $content = "微笑：/::) ,返回access_token result = ".$result;
         }else{
             $content = date("Y-m-d H:i:s",time())."\n\n".'<a href="http://m.cnblogs.com/?u=txw1958">技术支持 方倍工作室</a>';
         }
@@ -442,12 +450,10 @@ $item_str    </Articles>
             file_put_contents($log_filename, date('Y-m-d H:i:s')." ".$log_content."\r\n", FILE_APPEND);
         }
     }
-	
 
 
-    //发送get或post请求
-    private function http_curl($url, $method = 'get', $type = 'json', $data = array())
-    {
+    //发送get或post请求  _ add by lh.
+    private function http_curl($url, $method = 'get', $type = 'json', $data = array()){
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -466,7 +472,7 @@ $item_str    </Articles>
         }
     }
 
-    //获取access_token
+    //获取access_token _ add by lh.
     private function getWxAccessToken(){
         //将access_token存在session中
         if ($_SESSION['access_token'] && $_SESSION['expire_time'] > time()){
@@ -485,11 +491,12 @@ $item_str    </Articles>
         }
     }
 
-    //创建自定义菜单
+    //创建自定义菜单  _ add by lh.
     private function createMenu(){
         header('Content-Type:text/html;charset=utf-8');
         $access_token = $this->getWxAccessToken();
-        $url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token={$access_token}";
+        // $url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token={$access_token}";
+        $url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=".$access_token;
         $postArr = array(
             'button' => array(
                 array(
@@ -514,17 +521,94 @@ $item_str    </Articles>
                         array(
                             'name' => urlencode('菜单三'),
                             'type' => 'view',
-                            'url'  => 'http://www.qq.com';
+                            'url'  => 'http://www.qq.com'
                         )
                     )
                 )
-            ),   //第一个一级菜单
-            array(),    //第二个一级菜单
-            array()     //第三个一级菜单
+            ),
+            array(
+                'name' => urlencode('菜单一'),
+                'type' => 'click',
+                'key' => 'item1'
+            )     //第三个一级菜单
         );
         $postJson = urldecode(json_encode($postArr));
         $res = $this->http_curl($url, 'post', 'json', $postJson);
-        var_dump($res);
+        return $res;
     }
+
+    // 自定义菜单 _ add by zy.
+    private function createMenu1(){
+
+        header('Content-Type:text/html;charset=utf-8');
+        $ACC_TOKEN = $this->getWxAccessToken1();
+        $url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=".$ACC_TOKEN;
+        $postArr = array(
+            'button' => array(
+                array(
+                    'name' => urlencode('菜单一'),
+                    'type' => 'click',
+                    'key' => 'item1',
+                ),
+                array(
+                    'name' => urlencode('菜单二'),
+                    'type' => 'click',
+                    'key' => 'item1',
+                ),   //第二个一级菜单
+                array(    //第三个一级菜单
+                    'name' => urlencode('菜单三'),
+                    'type' => 'click',
+                    'key' => 'item1'
+                )));
+        $postJson = urldecode(json_encode($postArr));
+
+       // $res = $this->http_curl($url, 'post', 'json', $postJson);
+
+        $MENU_URL="https://api.weixin.qq.com/cgi-bin/menu/create?access_token=".$ACC_TOKEN;
+
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, $MENU_URL);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (compatible; MSIE 5.01; Windows NT 5.0)');
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($ch, CURLOPT_AUTOREFERER, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $postJson);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        $info = curl_exec($ch);
+
+        if (curl_errno($ch)) {
+            echo 'Errno'.curl_error($ch);
+        }
+
+        curl_close($ch);
+
+        return $info;
+
+
+    }
+
+
+    // 获得access_token _ add by zy.
+
+    private function getWxAccessToken1(){
+
+        $APPID="wx9c45ac1710eb8a3a";
+        $APPSECRET="64c8fdf0bdeaec473f9e4d971a63176a";
+
+        $TOKEN_URL="https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=".$APPID."&secret=".$APPSECRET;
+
+        $json=file_get_contents($TOKEN_URL);
+        $result=json_decode($json,true);
+
+        $ACC_TOKEN=$result['access_token'];
+
+        return $ACC_TOKEN;
+    }
+
+
 }
 ?>

@@ -85,6 +85,12 @@ class user extends Model
     return $status[$value];
     }
 
+    // status 修改器
+    protected function getUserStatusAttr($value){
+        $status = [-1 => '删除', 0 => '禁用', 1 => '正常', 2 => '待审核'];
+        return $status[$value];
+    }
+
 /*    protected function scopeEmail($query){
         $query->where('email','thinkphp@qq.com');
     }*/

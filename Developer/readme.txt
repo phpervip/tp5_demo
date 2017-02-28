@@ -27,3 +27,16 @@ tp5.caidou.biz
 方倍工作室的微信开发教程：http://www.cnblogs.com/txw1958/p/wechat-tutorial.html
 
 
+微信开发调试工具：http://blog.qqbrowser.cc/
+说明
+
+原有微信调试工具已不再维护，请使用其他更方便易用的调试工具 ，推荐——
+
+    TBS开发调试利器——TBS Studio
+    http://bbs.mb.qq.com/thread-1416936-1-1.html
+
+    微信web开发者工具
+    https://mp.weixin.qq.com/wiki/10/e5f772f4521da17fa0d7304f68b97d7e.html
+
+    公众号本地调试可以使用其他内网穿透的工具, 比如https://natapp.cn(同时也支持https,用于微信小程序)
+

@@ -10,6 +10,7 @@ namespace app\index\controller;
 use app\index\model\User as UserModel;
 use think\Controller;
 use think\Validate;
+use think\db\query;
 
 class User extends Controller
 {
@@ -41,7 +42,7 @@ class User extends Controller
                         })
                     ->all();*/
 
-        $list = UserModel::scope('email','thinkphp@qq.com')->all();
+/*        $list = UserModel::scope('email','thinkphp@qq.com')->all();
 
 
         foreach ($list as $user) {
@@ -50,8 +51,36 @@ class User extends Controller
             echo $user->birthday . '<br/>';
             echo $user->status . '<br/>';
             echo '-------------------------------------<br/>';
-        }
+        }*/
 
+        // 获取用户数据列表并输出
+        // 模板输出
+
+        // http://tp5.ccc/User/index
+
+           // $list = UserModel::all();
+
+        // 每页输出3条
+            $list = UserModel::paginate(3);
+            $this->assign('list',$list);
+            $this->assign('count',count($list));
+        // 临时关闭布局
+        $this->view->engine->layout(false);
+        // 输出替换
+        $this->view->replace([
+            '__PUBLIC__'=>'/static',
+
+
+        ]);
+
+
+            return $this->fetch();
+         // return $this->fetch('list');
+
+
+
+        // 助手函数
+        return view('',['user'=>$user],['__PUBLIC__'=>'/static']);
     }
 
     public function create(){
@@ -188,5 +217,31 @@ class User extends Controller
 
     }
 
+
+    // 输出数组
+    // http://tp5.ccc/index/User/read_a/id/1
+    public function read_a($id=''){
+
+      //  echo UserModel::get($id);
+
+       $user = UserModel::get($id);
+     // dump($user->toArray());
+
+        // 隐藏属性
+        // dump($user->hidden(['create_time','update_time'])->toArray());
+
+        // 指定属性
+        // dump($user->visible(['id','nickname','email'])->toArray());
+
+        // 追加属性 如果读取器定义了一些非数据库字段的读取
+        // 如果需要输出user_status属性数据的话，可以使用append方法
+
+        // 这句没实现，报错为：未定义数组索引
+        // dump($user->append(['user_status'])->toArray());
+
+        // 输出JSON
+        echo $user->toJson();
+
+    }
 
 }

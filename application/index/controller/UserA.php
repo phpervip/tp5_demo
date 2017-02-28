@@ -207,8 +207,11 @@ class UserA extends Controller
         dump($user->roles);   // 是一个对象。*/
 
         $user = UserModel::get(1,'roles');
-        dump($user->roles);    // 是一个对象。不是数组？
+        dump($user->roles()); // 是一个对象。不是数组？
+        // dump($user->toArray());     // 是数组
     }
+
+
 
 
 }

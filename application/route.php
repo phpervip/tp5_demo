@@ -15,6 +15,7 @@ Route::rule('hello/:name','index/hello');
 Route::rule('helloo/:name',function($name){
     return 'Helloo,'.$name.'!';
 });
+Route::rule(':version/user/:id','api/:version.User/read');
 
 return [
     '[hello]'     => [
@@ -62,5 +63,6 @@ return [
     'user/delete/:id' => 'index/user/delete',
     'user/:id'        => 'index/user/read',
     'userA/:id'       => 'index/userA/read',
+
 
 ];
