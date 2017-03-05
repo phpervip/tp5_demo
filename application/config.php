@@ -172,13 +172,19 @@ return [
         'level' => [],
     ],*/
 
-    'log'                    => [
+/*    'log'                    => [
         'type'  => 'socket',
         'host'  => 'localhost',
         'show_include_files'=>true,
         'force_client_ids'=>['slog_b6d7ef','slog_abd89d'],
         'allow_client_ids'=>['slog_b6d7ef','slog_abd89d'],
-    ],
+    ],*/
+
+        'log'=>[
+            'type'=>'driver\log\Email',
+            'email_addr'=>'thinkphp@qq.com',
+            'send_level'=>['error','info'],
+        ],
 
     // +----------------------------------------------------------------------
     // | Trace设置 开启 app_trace 后 有效

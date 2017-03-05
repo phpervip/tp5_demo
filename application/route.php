@@ -18,6 +18,7 @@ Route::rule('helloo/:name',function($name){
 Route::rule(':version/user/:id','api/:version.User/read');
 Route::resource('blogs','index/blog');
 
+
 return [
     '[hello]'     => [
         ':id'   => ['index/hello', ['method' => 'get'], ['id' => '\d+']],
@@ -64,6 +65,8 @@ return [
     'user/delete/:id' => 'index/user/delete',
     'user/:id'        => 'index/user/read',
     'userA/:id'       => 'index/userA/read',
+
+    'test/index'      => 'test/index/index',
 
 
 ];
