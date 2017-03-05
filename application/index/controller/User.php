@@ -14,6 +14,10 @@ use think\db\query;
 
 use think\Request;
 
+use think\Cookie;
+use think\Session;
+
+
 class User extends Controller
 {
     public function index(){
@@ -141,9 +145,46 @@ class User extends Controller
 
 
 
+    }
 
+    // 直接操作$_SESSION,必须使用上面的方式手动初始化或者直接调用session_start()方法进行session初始化
+    // 不建议直接操作$_SESSION全局变量。
+    // 通过Request对象读取Session数据支持默认值及过滤方法，因此也更加安全，并且支持多维数组的读取。
+    public function index2(Request $request){
+
+        echo $request->session('user_name');
+        echo $request->session('user.name');
+
+        echo Session::get('user_name');
+        echo Session::get('user.name');
+
+        // 初始化session
+        session([
+            'prefix'     => 'module',
+            'type'       => '',
+            'auto_start' => true,
+        ]);
+
+        // 赋值（当前作用域）
+                session('name', 'thinkphp');
+        // 赋值think作用域
+                session('name', 'thinkphp', 'think');
+        // 判断（当前作用域）是否赋值
+                session('?name');
+        // 取值（当前作用域）
+                session('name');
+        // 取值think作用域
+                session('name', '', 'think');
+        // 删除（当前作用域）
+                session('name', null);
+        // 清除session（当前作用域）
+                session(null);
+        // 清除think作用域
+                session(null, 'think');
 
     }
+
+
 
 
 

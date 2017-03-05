@@ -10,6 +10,9 @@ use org\util\ArrayList;
 
 use think\Log;
 
+use think\Session;
+
+
 class Index extends Controller
 {
     public function index()
@@ -39,6 +42,18 @@ class Index extends Controller
         Log::error('测试错误');
 
     }
+
+
+
+    public function index3(){
+        return $this->fetch();
+    }
+
+    public function save3($name=''){
+        Session::set('user_name',$name);
+        $this->success('Session设置成功');
+    }
+
 
 
     public function test(){
