@@ -12,6 +12,8 @@ use think\Controller;
 use think\Validate;
 use think\db\query;
 
+use think\Request;
+
 class User extends Controller
 {
     public function index(){
@@ -61,18 +63,16 @@ class User extends Controller
            // $list = UserModel::all();
 
         // 每页输出3条
+
             $list = UserModel::paginate(3);
             $this->assign('list',$list);
             $this->assign('count',count($list));
         // 临时关闭布局
-        $this->view->engine->layout(false);
+            $this->view->engine->layout(false);
         // 输出替换
-        $this->view->replace([
+            $this->view->replace([
             '__PUBLIC__'=>'/static',
-
-
-        ]);
-
+            ]);
 
             return $this->fetch();
          // return $this->fetch('list');
@@ -82,6 +82,71 @@ class User extends Controller
         // 助手函数
         return view('',['user'=>$user],['__PUBLIC__'=>'/static']);
     }
+
+
+    // 建议的读取Cookie数据的方法是通过Request请求对象的cookie方法（原因和Session读取一样），例如：
+    // 通过Request对象读取Cookie数据支持默认值及过滤方法，因此也更加安全，并且支持多维数组的读取。
+    public function index1(Request $request){
+        // 读取Cookie
+        echo $request->cookie('user_name');
+        // 读取二维数组
+        echo $request->cookie('user.name');
+
+        // 当然也支持使用Cookie类直接读取数据：
+        echo Cookie::get('user_name');
+
+        // Cookier操作
+        // 设置
+
+        // 设置Cookie 有效期为 3600秒
+        Cookie::set('name','value',3600);
+        // 设置cookie 前缀为think_
+        Cookie::set('name','value',['prefix'=>'think_', 'expire'=>3600]);
+        // 支持数组
+        Cookie::set('name',[1,2,3]);
+
+        // 判断
+        Cookie::has('name');
+        // 判断指定前缀的cookie值是否存在
+        Cookie::has('name','think_');
+
+        // 获取
+        Cookie::get('name');
+        // 获取指定前缀的cookie值
+        Cookie::get('name','think_');
+
+        //删除cookie
+        Cookie::delete('name');
+        // 删除指定前缀的cookie
+        Cookie::delete('name','think_');
+
+        // 清空
+
+        // 清空指定前缀的cookie
+        Cookie::clear('think_');
+
+        // 助手函数
+
+        // 初始化
+        cookie(['prefix' => 'think_', 'expire' => 3600]);
+        // 设置
+                cookie('name', 'value', 3600);
+        // 判断
+                cookie('?name');
+        // 获取echo cookie('name');
+        // 删除
+                cookie('name', null);
+        // 清除
+                cookie(null, 'think_');
+
+
+
+
+
+    }
+
+
+
 
     public function create(){
         return view('user/create');
