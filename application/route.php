@@ -16,6 +16,7 @@ Route::rule('helloo/:name',function($name){
     return 'Helloo,'.$name.'!';
 });
 Route::rule(':version/user/:id','api/:version.User/read');
+Route::resource('blogs','index/blog');
 
 return [
     '[hello]'     => [

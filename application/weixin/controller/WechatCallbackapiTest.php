@@ -553,12 +553,12 @@ $item_str    </Articles>
                 array(
                     'name' => urlencode('菜单二'),
                     'type' => 'click',
-                    'key' => 'item1',
+                    'key' => 'item2',
                 ),   //第二个一级菜单
                 array(    //第三个一级菜单
                     'name' => urlencode('菜单三'),
                     'type' => 'click',
-                    'key' => 'item1'
+                    'key' => 'item3'
                 )));
         $postJson = urldecode(json_encode($postArr));
 
