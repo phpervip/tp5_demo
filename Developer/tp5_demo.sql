@@ -86,6 +86,35 @@ INSERT INTO `think_access` VALUES (1,1),(1,2),(1,3),(2,1);
 UNLOCK TABLES;
 
 --
+-- Table structure for table `think_blog`
+--
+
+DROP TABLE IF EXISTS `think_blog`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `think_blog` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `name` char(40) NOT NULL DEFAULT '' COMMENT '标识',
+  `title` char(80) NOT NULL DEFAULT '' COMMENT '标题',
+  `content` text COMMENT '内容',
+  `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `update_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '数据状态',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='博客表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `think_blog`
+--
+
+LOCK TABLES `think_blog` WRITE;
+/*!40000 ALTER TABLE `think_blog` DISABLE KEYS */;
+INSERT INTO `think_blog` VALUES (1,'jenny','sunny day','Today is a sunny day',1488680264,1488680939,1),(2,'thinkphp','Thinkphp5.0----为API开发而设计的高性能框架','ThinkphpＶ5.0是一个为API开发而设计的高性能框架，是一个颠覆和重构版本，采用全新的架构思想，引和了很多的PHP新特性，优化了核心，减少了依赖，实现了真正的惰性加载，支持commposer,并针对API开发做了大量的优化。',1488680560,1488680560,1),(3,'thinkphp','Thinkphp5.0----为API开发而设计的高性能框架','ThinkphpＶ5.0是一个为API开发而设计的高性能框架，是一个颠覆和重构版本，采用全新的架构思想，引和了很多的PHP新特性，优化了核心，减少了依赖，实现了真正的惰性加载，支持commposer,并针对API开发做了大量的优化。',1488680568,1488680568,1);
+/*!40000 ALTER TABLE `think_blog` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `think_book`
 --
 
@@ -162,7 +191,7 @@ CREATE TABLE `think_profile` (
 
 LOCK TABLES `think_profile` WRITE;
 /*!40000 ALTER TABLE `think_profile` DISABLE KEYS */;
-INSERT INTO `think_profile` VALUES (1,3,'吉米','18277700000','1234@qq.com'),(2,4,'汤米','13966600000','2345@qq.com');
+INSERT INTO `think_profile` VALUES (1,3,'吉米','18277700000','1234@qq.com'),(2,4,'汤米','13966600000','2345@qq.com'),(3,10,'刘晨','13966600001','2345@qq.com');
 /*!40000 ALTER TABLE `think_profile` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -190,7 +219,7 @@ CREATE TABLE `think_profile_a` (
 
 LOCK TABLES `think_profile_a` WRITE;
 /*!40000 ALTER TABLE `think_profile_a` DISABLE KEYS */;
-INSERT INTO `think_profile_a` VALUES (1,'刘晨',226339200,'中国上海','liu21st@gmail.com',1),(2,'刘晨',226339200,'中国上海','thinkphp@qq.com',2),(4,'',0,NULL,'liu21st@gmail.com',1);
+INSERT INTO `think_profile_a` VALUES (1,'刘晨',226339200,'中国上海','liu21st@gmail.com',1),(2,'刘晨',226339200,'中国上海','thinkphp@qq.com',2),(4,'刘晨',226339200,NULL,'liu21st@gmail.com',10);
 /*!40000 ALTER TABLE `think_profile_a` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -256,7 +285,7 @@ CREATE TABLE `think_user` (
   `nickname` varchar(50) NOT NULL COMMENT '昵称',
   `email` varchar(255) DEFAULT NULL COMMENT '邮箱',
   `birthday` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '生日',
-  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
+  `status` tinyint(2) NOT NULL COMMENT '状态',
   `create_time` int(11) NOT NULL COMMENT '注册时间',
   `update_time` int(11) NOT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
@@ -269,7 +298,7 @@ CREATE TABLE `think_user` (
 
 LOCK TABLES `think_user` WRITE;
 /*!40000 ALTER TABLE `think_user` DISABLE KEYS */;
-INSERT INTO `think_user` VALUES (1,'刘晨','liu21st@gmail.com',569174400,1,0,0),(2,'张三','thinkphp@qq.com',653673600,1,0,0),(3,'李四','lisi@qq.com',653673600,0,0,0),(4,'张三','zhanghsan@qq.com',0,0,0,0),(5,'李四','lisi@qq.com',0,0,0,0),(6,'张三','zhanghsan@qq.com',0,0,0,0),(7,'李四','lisi@qq.com',0,0,0,0),(8,'张三','zhanghsan@qq.com',0,0,0,0),(9,'李四','lisi@qq.com',0,0,0,0),(10,'张三','zhanghsan@qq.com',0,0,0,0),(11,'李四','lisi@qq.com',0,0,0,0),(12,'张三','zhanghsan@qq.com',0,0,0,0),(13,'李四','lisi@qq.com',0,0,0,0),(14,'张三','zhanghsan@qq.com',0,0,0,0),(15,'李四','lisi@qq.com',0,0,0,0),(16,'流年','thinkphp@qq.com',0,0,0,0),(17,'张三','zhanghsan@qq.com',0,0,0,0),(18,'李四','lisi@qq.com',0,0,0,0),(19,'张三','zhanghsan@qq.com',0,0,0,0),(20,'李四','lisi@qq.com',0,0,0,0),(21,'张三','zhanghsan@qq.com',0,0,0,0),(22,'李四','lisi@qq.com',0,0,0,0),(23,'流年','thinkphp@qq.com',0,0,0,0),(24,'张三','zhanghsan@qq.com',0,0,0,0),(25,'李四','lisi@qq.com',0,0,0,0),(26,'张三','zhanghsan@qq.com',0,0,2017,2017),(27,'李四','lisi@qq.com',0,0,2017,2017),(28,'张三','zhanghsan@qq.com',0,1,1487777739,1487777739),(29,'李四','lisi@qq.com',0,1,1487777739,1487777739),(30,'流年','thinkphp@qq.com',0,1,1487856708,1487856708),(31,'流年','thinkphp@qq.com',0,1,1487856726,1487856726),(32,'依依','thinkphp@qq.com',315590400,2,1487856926,1487856926);
+INSERT INTO `think_user` VALUES (1,'刘晨','liu21st@gmail.com',569174400,1,0,0),(2,'张三','thinkphp@qq.com',653673600,1,0,0),(3,'李四','lisi@qq.com',653673600,0,0,0),(4,'张三','zhanghsan@qq.com',653673600,0,0,0),(5,'李四','lisi@qq.com',653673600,0,0,0),(6,'张三','zhanghsan@qq.com',569174400,0,0,0),(7,'李四','lisi@qq.com',569174400,0,0,0),(8,'张三','zhanghsan@qq.com',569174400,0,0,0),(9,'李四','lisi@qq.com',569174400,0,0,0),(10,'张三','zhanghsan@qq.com',569174400,0,0,0),(11,'李四','lisi@qq.com',569174400,0,0,0),(12,'张三','zhanghsan@qq.com',569174400,0,0,0),(13,'李四','lisi@qq.com',569174400,0,0,0),(14,'张三','zhanghsan@qq.com',569174400,0,0,0),(15,'李四','lisi@qq.com',569174400,0,0,0),(16,'流年','thinkphp@qq.com',569174400,0,0,0),(17,'张三','zhanghsan@qq.com',569174400,0,0,0),(18,'李四','lisi@qq.com',569174400,0,0,0),(19,'张三','zhanghsan@qq.com',569174400,0,0,0),(20,'李四','lisi@qq.com',569174400,0,0,0),(21,'张三','zhanghsan@qq.com',569174400,0,0,0),(22,'李四','lisi@qq.com',0,0,0,0),(23,'流年','thinkphp@qq.com',569174400,0,0,0),(24,'张三','zhanghsan@qq.com',569174400,0,0,0),(25,'李四','lisi@qq.com',569174400,0,0,0),(26,'张三','zhanghsan@qq.com',569174400,0,2017,2017),(27,'李四','lisi@qq.com',569174400,0,2017,2017),(28,'张三','zhanghsan@qq.com',569174400,1,1487777739,1487777739),(29,'李四','lisi@qq.com',569174400,1,1487777739,1487777739),(30,'流年','thinkphp@qq.com',569174400,1,1487856708,1487856708),(31,'流年','thinkphp@qq.com',569174400,1,1487856726,1487856726),(32,'依依','thinkphp@qq.com',315590400,2,1487856926,1487856926);
 /*!40000 ALTER TABLE `think_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -289,7 +318,7 @@ CREATE TABLE `think_user0` (
   `update_time` datetime DEFAULT NULL,
   `status` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -344,4 +373,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-02-25 15:36:59
+-- Dump completed on 2017-04-16 19:19:19
