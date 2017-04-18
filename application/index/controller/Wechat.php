@@ -231,7 +231,6 @@ class Wechat extends Controller
     {
         //这个echostr呢  只有说验证的时候才会echo  如果是验证过之后这个echostr是不存在的字段了
         $echoStr = $_GET["echostr"];
-
         if ($this->checkSignature()) {
             echo $echoStr;
             //如果你不知道是否验证成功  你可以先echo echostr 然后再写一个东西

@@ -26,6 +26,9 @@ tp5.caidou.biz
 
 方倍工作室的微信开发教程：http://www.cnblogs.com/txw1958/p/wechat-tutorial.html
 
+慕课网 PHP微信公众平台开发攻略
+http://www.imooc.com/course/programdetail/pid/53
+
 
 微信开发调试工具：http://blog.qqbrowser.cc/
 说明
