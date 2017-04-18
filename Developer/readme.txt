@@ -11,14 +11,17 @@ appsecret
 接口配置信息修改
 请填写接口配置信息，此信息需要你有自己的服务器资源，填写的URL需要正确响应微信发送的Token验证，请阅读消息接口使用指南。
 URL
-http://tp5.caidou.biz/weixin/Wechat_Callbackapi_Test
+http://tp5.yyii.info/index/wechat/index
+http://tp5.yyii.info/weixin/wechatCallbackapiTest
 Token
 weixin
+
+tp5.yyii.info
 
 JS接口安全域名修改
 设置JS接口安全域后，通过关注该测试号，开发者即可在该域名下调用微信开放的JS接口，请阅读微信JSSDK开发文档。
 域名
-tp5.caidou.biz
+
 
 微信接口调试工具：http://mp.weixin.qq.com/debug
 
