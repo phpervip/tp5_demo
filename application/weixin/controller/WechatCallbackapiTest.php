@@ -16,6 +16,7 @@ if (!isset($_GET['echostr'])) {
     $wechatObj->valid();
 }
 
+// http://tp5.yyii.info/weixin/wechatCallbackapiTest
 class wechatCallbackapiTest
 {
     //验证签名

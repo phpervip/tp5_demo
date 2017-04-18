@@ -25,6 +25,7 @@ if (!isset($_GET['echostr'])) {
 }
 
 // http://tp5.ccc/index/wechat
+// http://tp5.yyii.info/index/wechat
 class Wechat extends Controller
 {
 
