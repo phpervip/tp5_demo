@@ -13,8 +13,11 @@ use think\Controller;
  * 首页
  */
 define("TOKEN", "weixin");//定义你公众号自己设置的token
-define("APPID", "wx9c45ac1710eb8a3a");//填写你微信公众号的appid 千万要一致啊
-define("APPSECRET", "64c8fdf0bdeaec473f9e4d971a63176a");//填写你微信公众号的appsecret  千万要记得保存 以后要看的话就只有还原了  保存起来 有益无害
+//define("APPID", "wx9c45ac1710eb8a3a");//填写你微信公众号的appid 一步登天的测试号
+//define("APPSECRET", "64c8fdf0bdeaec473f9e4d971a63176a");//填写你微信公众号的appsecret  千万要记得保存 以后要看的话就只有还原了  保存起来 有益无害
+
+define("APPID", "wx54109120842d46d4");//填写你微信公众号的appid 一步登天的测试号
+define("APPSECRET", "a72ffd7a4e4c81c6e45da9218eecdd2e");//填写你微信公众号的appsecret  千万要记得保存 以后要看的话就只有还原了  保存起来 有益无害
 
 // http://tp5.ccc/index/wechat
 // http://tp5.yyii.info/index/wechat/index
@@ -22,7 +25,7 @@ class Wechat extends Controller
 {
 
 
-    public function index(){
+    public function index_1(){
 
         //获得参数 signature nonce token timestamp echostr
         $nonce     = $_GET['nonce'];
@@ -53,7 +56,7 @@ class Wechat extends Controller
     }
 
     // 接收事件推送并回复
-    public function reponseMsg(){
+    public function reponseMsg_1(){
         //1.获取到微信推送过来post数据（xml格式）
         $postArr = $GLOBALS['HTTP_RAW_POST_DATA'];
         //2.处理消息类型，并设置回复类型和内容
@@ -227,15 +230,22 @@ class Wechat extends Controller
     }//reponseMsg end
 
     //判断是介入还是用户  只有第一次介入的时候才会返回echostr
-    function index_0()
+    public function index()
     {
         //这个echostr呢  只有说验证的时候才会echo  如果是验证过之后这个echostr是不存在的字段了
         $echoStr = $_GET["echostr"];
-        if ($this->checkSignature()) {
-            echo $echoStr;
-            //如果你不知道是否验证成功  你可以先echo echostr 然后再写一个东西
-            exit;
+        if($echoStr){
+            if ($this->checkSignature()) {
+                echo $echoStr;
+                //如果你不知道是否验证成功  你可以先echo echostr 然后再写一个东西
+                exit;
+            }
+        }else{
+            $msg =date("Y-m-d H:i:s")."\n";
+            file_put_contents(ROOT_PATH."success.txt",$msg,FILE_APPEND);//记录日志
+           $this->responseMsg();
         }
+
 
     }//index end
 
@@ -291,10 +301,14 @@ class Wechat extends Controller
 
     // 下面是从方倍copy
     // 响应消息
-    public function responseMsg_0()
+    public function responseMsg()
     {
-        $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
-        // $postStr = file_get_contents("php://input");
+        // $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
+        $postStr = file_get_contents("php://input");
+
+        $msg =date("Y-m-d H:i:s")."\n";
+        file_put_contents(ROOT_PATH."success.txt",$msg,FILE_APPEND);//记录日志
+
         if (!empty($postStr)){
             $this->logger("R \r\n".$postStr);
             $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);

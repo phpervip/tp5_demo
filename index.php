@@ -16,5 +16,7 @@ define('APP_PATH', __DIR__ . '/application/');
 // 加载框架命令行引导文件
 //require './thinkphp/console.php';
 
+define('ROOT_PATH',str_replace("\\",'/',substr(dirname(__FILE__),0,26)));
+
 // 加载框架引导文件
 require __DIR__ . '/thinkphp/start.php';
