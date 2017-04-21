@@ -1,4 +1,6 @@
 <?php
+
+namespace app\weixin\controller;
 /*
     方倍工作室 http://www.fangbei.org/
     CopyRight 2015 All Rights Reserved
@@ -8,7 +10,7 @@ header('Content-type:text');
 
 define("TOKEN", "weixin");
 
-$wechatObj = new wechatCallbackapiTest();
+$wechatObj = new wechatcallbackapitest();
 
 if (!isset($_GET['echostr'])) {
     $wechatObj->responseMsg();
@@ -17,7 +19,7 @@ if (!isset($_GET['echostr'])) {
 }
 
 // http://tp5.yyii.info/weixin/wechatCallbackapiTest
-class wechatCallbackapiTest
+class wechatcallbackapitest
 {
     //验证签名
     public function valid()
@@ -33,6 +35,7 @@ class wechatCallbackapiTest
         $tmpStr = sha1($tmpStr);
         if($tmpStr == $signature){
             echo $echoStr;
+            $this->logger("3R \r\n".$echoStr);
             exit;
         }
     }
@@ -40,13 +43,13 @@ class wechatCallbackapiTest
     // 响应消息
     public function responseMsg()
     {
-        // $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
-        $postStr = file_get_contents("php://input");
+        $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
+        //  $postStr = file_get_contents("php://input");
         if (!empty($postStr)){
             $this->logger("R \r\n".$postStr);
             $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
             $RX_TYPE = trim($postObj->MsgType);
-
+            $this->logger("R \r\n".$RX_TYPE);
             //消息类型分离
             switch ($RX_TYPE)
             {
@@ -168,6 +171,8 @@ class wechatCallbackapiTest
             return $result;
         }
 
+        $this->logger("R \r\n".$keyword);
+
         //自动回复模式
         if (strstr($keyword, "文本")){
             $content = "这是个文本消息";
@@ -198,6 +203,8 @@ class wechatCallbackapiTest
             $nickname = $user->where('id=1')->getfield('nickname');
             $content = date("Y-m-d H:i:s",time())."\n\n".'<a href="http://m.cnblogs.com/?u=txw1958">技术支持 '.$nickname.'工作室</a>';
         }
+
+        $this->logger("R \r\n".$content);
 
         if(is_array($content)){
             if (isset($content[0])){

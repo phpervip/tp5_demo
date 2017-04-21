@@ -6,3 +6,5 @@ tp5.zip
 application/database.php
 application/database_0.php
 runtime/
+log.xml
+success.txt

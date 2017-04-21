@@ -19,13 +19,23 @@ define("TOKEN", "weixin");//定义你公众号自己设置的token
 define("APPID", "wx54109120842d46d4");//填写你微信公众号的appid 一步登天的测试号
 define("APPSECRET", "a72ffd7a4e4c81c6e45da9218eecdd2e");//填写你微信公众号的appsecret  千万要记得保存 以后要看的话就只有还原了  保存起来 有益无害
 
+
+/*$wechatObj = new wechat();
+
+if (!isset($_GET['echostr'])) {
+    $wechatObj->responseMsg();
+}else{
+    $wechatObj->index();
+}*/
+
+
 // http://tp5.ccc/index/wechat
 // http://tp5.yyii.info/index/wechat/index
 class Wechat extends Controller
 {
 
 
-    public function index_1(){
+    public function index(){
 
         //获得参数 signature nonce token timestamp echostr
         $nonce     = $_GET['nonce'];
@@ -33,20 +43,24 @@ class Wechat extends Controller
         $timestamp = $_GET['timestamp'];
         $echostr   = $_GET['echostr'];
         $signature = $_GET['signature'];
+
+        $this->logger("R \r\n".$echostr);
+
         //形成数组，然后按字典序排序
         $array = array();
         $array = array($nonce, $timestamp, $token);
         sort($array);
         //拼接成字符串,sha1加密 ，然后与signature进行校验
         $str = sha1( implode( $array ) );
-        if( $str  == $signature && $echostr ){
+        if( $str==$signature && $echostr ){
             //第一次接入weixin api接口的时候
+            $this->logger("R \r\n"."2R \r\n".$echostr);
             echo  $echostr;
-            exit;
         }else{
+            $this->logger("R \r\n".'echostr is null');
             $this->reponseMsg();
         }
-
+        exit;
 
     }
 
@@ -56,11 +70,15 @@ class Wechat extends Controller
     }
 
     // 接收事件推送并回复
-    public function reponseMsg_1(){
+    public function reponseMsg(){
         //1.获取到微信推送过来post数据（xml格式）
         $postArr = $GLOBALS['HTTP_RAW_POST_DATA'];
+
+
+
+
         //2.处理消息类型，并设置回复类型和内容
-        /*<xml>
+/*        <xml>
 <ToUserName><![CDATA[toUser]]></ToUserName>
 <FromUserName><![CDATA[FromUser]]></FromUserName>
 <CreateTime>123456789</CreateTime>
@@ -75,6 +93,9 @@ class Wechat extends Controller
         //$postObj->Event = '';
         // gh_e79a177814ed
         //判断该数据包是否是订阅的事件推送
+
+        $this->logger("R \r\n".$postObj->MsgType);
+
         if( strtolower( $postObj->MsgType) == 'event'){
             //如果是关注 subscribe 事件
             if( strtolower($postObj->Event == 'subscribe') ){
@@ -111,7 +132,7 @@ class Wechat extends Controller
 <MsgType><![CDATA[text]]></MsgType>
 <Content><![CDATA[你好]]></Content>
 </xml>*/
-        /*if(strtolower($postObj->MsgType) == 'text'){
+        if(strtolower($postObj->MsgType) == 'text'){
             switch( trim($postObj->Content) ){
                 case 1:
                     $content = '您输入的数字是1';
@@ -130,7 +151,7 @@ class Wechat extends Controller
                 break;
 
             }
-                $template = "<xml>
+               $template = "<xml>
 <ToUserName><![CDATA[%s]]></ToUserName>
 <FromUserName><![CDATA[%s]]></FromUserName>
 <CreateTime>%s</CreateTime>
@@ -146,8 +167,8 @@ class Wechat extends Controller
                 echo sprintf($template, $toUser, $fromUser, $time, $msgType, $content);
 
         }
-    }
-*/
+ //   }
+
         //用户发送tuwen1关键字的时候，回复一个单图文
         if( strtolower($postObj->MsgType) == 'text' && trim($postObj->Content)=='tuwen2' ){
             $toUser = $postObj->FromUserName;
@@ -230,7 +251,7 @@ class Wechat extends Controller
     }//reponseMsg end
 
     //判断是介入还是用户  只有第一次介入的时候才会返回echostr
-    public function index()
+    public function index_0()
     {
         //这个echostr呢  只有说验证的时候才会echo  如果是验证过之后这个echostr是不存在的字段了
         $echoStr = $_GET["echostr"];
@@ -301,7 +322,7 @@ class Wechat extends Controller
 
     // 下面是从方倍copy
     // 响应消息
-    public function responseMsg()
+    public function responseMsg_0()
     {
         // $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
         $postStr = file_get_contents("php://input");
