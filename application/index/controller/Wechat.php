@@ -13,12 +13,8 @@ use think\Controller;
  * 首页
  */
 define("TOKEN", "weixin");//定义你公众号自己设置的token
-//define("APPID", "wx9c45ac1710eb8a3a");//填写你微信公众号的appid 一步登天的测试号
-//define("APPSECRET", "64c8fdf0bdeaec473f9e4d971a63176a");//填写你微信公众号的appsecret  千万要记得保存 以后要看的话就只有还原了  保存起来 有益无害
-
-define("APPID", "wx54109120842d46d4");//填写你微信公众号的appid 一步登天的测试号
-define("APPSECRET", "a72ffd7a4e4c81c6e45da9218eecdd2e");//填写你微信公众号的appsecret  千万要记得保存 以后要看的话就只有还原了  保存起来 有益无害
-
+define("APPID", "wx9c45ac1710eb8a3a");//填写你微信公众号的appid 一步登天的测试号
+define("APPSECRET", "64c8fdf0bdeaec473f9e4d971a63176a");//填写你微信公众号的appsecret  千万要记得保存 以后要看的话就只有还原了  保存起来 有益无害
 
 /*$wechatObj = new wechat();
 
